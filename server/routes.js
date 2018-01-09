@@ -22,9 +22,7 @@ module.exports = function(app){
 	        var destPath = './client/uploads/' + fileName;
 
 	        fs.rename(tmpPath, destPath, function(err) {
-	            if (err) {
-	                return res.status(400).send('File was not uploaded: ' + err);
-	            }
+	            if (err) return res.status(400).send('File was not uploaded: ' + err);
 	            return res.json(destPath);
 	        });
 	    });
@@ -40,13 +38,10 @@ module.exports = function(app){
 		var removed_files = [];
 
 		//start looping through new file
-		for(var key in newfile){
+		for (var key in newfile) {
 			var diff, variation, description, added, removed, product, newdata, olddata, updated, newretail, newwholesale, removed_pt, country;
 
-			if(key == 0){
-			continue;
-			}
-
+			if(key == 0) continue;
 
 			//set status of new data row
 			updated = false;
@@ -54,20 +49,16 @@ module.exports = function(app){
 
 			newdata = newfile[key];
 			// manipulate the data received
-			if(newdata){
+			if (newdata) {
 				country = newdata[9];
 				newretail = newdata[3];
-				if(newretail){
-				  newretail = newretail.replace(',','');
-				}
+				if (newretail) newretail = newretail.replace(',','');
+
 				newwholesale = newdata[4];
-				if(newwholesale){
-				  newwholesale = newwholesale.replace(',','');
-				}
+				if(newwholesale) newwholesale = newwholesale.replace(',','');
+
 				description = newdata[2];
-				if (description) {
-				  description = description.replace(/,/g ,'');
-				}
+				if (description) description = description.replace(/,/g ,'');
 
 				//this is the proposed GSA price
 				newdata = newdata[8];
@@ -94,9 +85,7 @@ module.exports = function(app){
 				var old_wholesale = old_iteration[4];
 				var old_country = old_iteration[9];
 
-				if(i == 0){
-					continue;
-				}
+				if(i == 0)continue;
 
 				olddata = oldfile[i];
 				olddata = olddata[8];
@@ -107,7 +96,7 @@ module.exports = function(app){
 				}
 
 				//if these part numbers match do things
-				if(old_pt_num == part_no){
+				if (old_pt_num == part_no) {
 					// check variation of value
 					if(newdata > olddata){
 						diff = 'increase';
@@ -141,10 +130,10 @@ module.exports = function(app){
 					break;
 					// end if comparison
 				}
-		    } // end oldfile loop
+		  } // end oldfile loop
 
 			// if there was no comparison found this item is added or removed
-			if(!updated){
+			if (!updated) {
 				olddata = '-';
 				added = "added";
 				variation = 0;
@@ -167,19 +156,15 @@ module.exports = function(app){
 				}
 
 				merged_files.push(obj);
+				console.log(obj)
 			}
-	    } // end new file loop
+	  } // end new file loop
 
 	    for(var key in oldfile){
 	    	var pt_included = false;
 
-	    	if(key == 0){
-	    		continue;
-	    	}
-
-	    	if(key == 1){
-	    		console.log(oldfile[key]);
-	    	}
+	    	if(key == 0) continue;
+	    	if(key == 1) console.log(oldfile[key]);
 
 	    	var part = oldfile[key];
 	    	var part_no = part[1];
@@ -190,12 +175,10 @@ module.exports = function(app){
 	    	var part_country = part[9];
 
 	    	for(var i in merged_files){
-	    		if(merged_files[i].part_no == part_no){
-	    			pt_included = true;
-	    		}
+	    		if (merged_files[i].part_no == part_no) pt_included = true;
 	    	}
 
-	    	if(!pt_included){
+	    	if (!pt_included) {
 	    		console.log('removed');
 	    		console.log(part);
 
