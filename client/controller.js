@@ -24,7 +24,7 @@ angular.module('controller', [])
           var _var = data[key].var;
           var _diff = data[key].diff;
           var _country = data[key].country;
-        
+
           var string = _manu + ", " + _part + ", " + _desc + ", " + _cost + ", " + _retail + ", $" + _old + ", $" + _new + ", " + _var + ", " + _diff + ', ' + _country;
           csvContent.push(string);
         }
@@ -48,9 +48,7 @@ angular.module('controller', [])
       });
 
       $scope.upload_old = function(file) {
-          if(!file){
-            return;
-          }
+          if (!file) return;
 
           Upload.upload({
               url: '/api/files/upload',
@@ -70,9 +68,7 @@ angular.module('controller', [])
           });
       };
       $scope.upload_new = function(file) {
-        if(!file){
-          return;
-        }
+        if (!file) return;
 
         Upload.upload({
             url: '/api/files/upload',
@@ -101,7 +97,7 @@ angular.module('controller', [])
                 exportData($scope.merged_files);
               });
 
-              $scope.showFile = true; 
+              $scope.showFile = true;
 
             }); // end function
         });
