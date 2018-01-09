@@ -4,7 +4,7 @@ var app                 = express();
 var methodOverride    	= require('method-override');
 var router              = express.Router();
 var bodyParser 					= require('body-parser');
-var port 								= 8585;
+var port            		= process.env.PORT || 8585;
 var http 								= require('http');
 var server 							= http.createServer(app);
 server.listen(port);
