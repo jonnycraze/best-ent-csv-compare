@@ -1,0 +1,69 @@
+<section>
+    <article>
+        <h1>CSV Data Differencials</h1>
+        <ul>
+            <li>Manufacturer should be <strong>Column 1</strong></li>
+            <li>Part # should be <strong>Column 2</strong></li>
+            <li>Retail value should be <strong>Column 4</strong></li>
+            <li>Cost value should be <strong>Column 5</strong></li>
+            <li>GSA price should be <strong>Column 9</strong></li>
+        </ul>
+        <div class="btn action" ngf-select ng-model="file_a">
+                Add File 1 (old)
+        </div>
+        <div class="btn action" ngf-select ng-model="file_b">
+                Add File 2 (new)
+        </div>
+
+        <p data-ng-if="file_a_complete">
+            Uploading old file completed Successfully
+        </p>
+        <p data-ng-if="file_b_complete">
+            Uploading new file completed Successfully
+        </p>
+    </article>
+    <article>
+        <p>
+            You Can filter the table below to see different datasets, downloading will export the merged data to your computer
+        </p>
+        <a href="{{linkObj}}" download="{{linkDL}}" ng-show="showFile" ng-click="exportData()" class="download">Download New File</a>
+    </article>
+    <article ng-show="showFile">
+        <select ng-model="dataFilter">
+            <option value="">Show All</option>
+            <option value="increase">Increase Only</option>
+            <option value="decrease">Decrease Only</option>
+            <option value="add">Added</option>
+            <option value="del">Removed</option>
+        </select>
+        <table>
+            <thead>
+                <th>Key</th>
+                <th ng-click="sortType = 'manufacturer'; sortReverse = !sortReverse">Manufacturer</th>
+                <th ng-click="sortType = 'part_no'; sortReverse = !sortReverse">Part #</th>
+                <th>Cost</th>
+                <th>Retail</th>
+                <th>GSA Old Price</th>
+                <th>GSA New Price</th>
+                <th ng-click="sortType = 'var'; sortReverse = !sortReverse">Variation (+/-)</th>
+                <th ng-click="sortType = 'add'; sortReverse = !sortReverse">Action</th>
+                <th>Origin</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in merged_files | orderBy:sortType:sortReverse | filter: dataFilter">
+                    <td>{{item.seq}}</td>
+                    <td>{{item.manufacturer}}</td>
+                    <td>{{item.part_no}}</td>
+                    <td>{{item.cost}}</td>
+                    <td>{{item.retail}}</td>
+                    <td>${{item.old}}</td>
+                    <td>${{item.new}}</td>
+                    <td class="diff {{item.diff}}">{{item.var}}</td>
+                    <td>{{item.diff}}</td>
+                    <td>{{item.country}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </article>
+
+</section>
