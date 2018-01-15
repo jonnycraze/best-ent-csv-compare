@@ -6,14 +6,17 @@ angular.module('CSVservice',[])
 
         function getData(filename, callback) {
             var url = '/uploads/' + filename.name;
+            console.log(url)
             $http.get(url).then(function(response){
 
                 var stuff = CSVToArray(response.data);
                 callback(stuff);
                 // return stuff;
+            }).then(function(err) {
+              console.log(err)
             });
 
-            // the file has been passed through a function and parsed, 
+            // the file has been passed through a function and parsed,
             // the parsed array is now being made available.
             // return file;
         }

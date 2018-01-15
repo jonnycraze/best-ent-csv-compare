@@ -9,7 +9,7 @@ var router 			= express.Router();
 var storage = multer.diskStorage({
   destination: './client/uploads/',
   filename: function (req, file, cb) {
-		cb(null, Date.now() + '-' + file.originalname)
+		cb(null, file.originalname)
   }
 });
 var upload = multer({storage: storage});
@@ -208,7 +208,7 @@ module.exports = function(app) {
 
 	// frontend routes =========================================================
 	// route to handle all angular requests
-	app.get('*', function(req, res, next) {
-		res.sendFile('./client/index.html');
-	});
+	// app.get('*', function(req, res, next) {
+	// 	res.sendFile(__dirname + '../client/index.html');
+	// });
 }

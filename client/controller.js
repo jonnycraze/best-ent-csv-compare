@@ -61,6 +61,7 @@ angular.module('controller', [])
               $scope.uploadProgress = progressPercentage;
           }).success(function (data, status, headers, config) {
               CSV.get(file, function(csvdata){
+                console.log(csvdata)
                 $scope.oldfiledata = csvdata;
               });
 
@@ -92,6 +93,7 @@ angular.module('controller', [])
                 oldfile: $scope.oldfiledata,
                 newfile: $scope.newfiledata
               }
+              console.log('this is where we do our post', _data)
               CSV.post(_data, function(data){
                 $scope.merged_files = data.data;
                 exportData($scope.merged_files);
