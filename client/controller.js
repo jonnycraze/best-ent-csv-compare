@@ -9,23 +9,25 @@ angular.module('controller', [])
       var exportData = function(data){
         var csvContent = new Array();
 
-        var header = "MFR, Part #, Description, Cost, Retail, GSA Old Price, GSA New Price, Variance, Action, Country";
+        var header = "MFR, Part #, Description, Cost, Retail Old, Retail New, Retail Difference, GSA Old Price, GSA New Price, Variance, Action, Country";
 
         csvContent.push(header);
 
-        for(var key in data){
+        for (var key in data) {
           var _manu = data[key].manufacturer;
           var _part = data[key].part_no;
           var _desc = data[key].desc;
           var _cost = data[key].cost;
-          var _retail = data[key].retail;
+          var _retailOld = data[key].retail;
+          var _retailNew = data[key].new_retail || '';
+          var _retailDif = data[key].retail_dif || '';
           var _old = data[key].old;
           var _new = data[key].new;
           var _var = data[key].var;
           var _diff = data[key].diff;
           var _country = data[key].country;
 
-          var string = _manu + ", " + _part + ", " + _desc + ", " + _cost + ", " + _retail + ", $" + _old + ", $" + _new + ", " + _var + ", " + _diff + ', ' + _country;
+          var string = _manu + ", " + _part + ", " + _desc + ", " + _cost + ", " + _retailOld + ", " + _retailNew + ", " + _retailDif + ", $" + _old + ", $" + _new + ", " + _var + ", " + _diff + ', ' + _country;
           csvContent.push(string);
         }
 
@@ -57,11 +59,9 @@ angular.module('controller', [])
               data: $scope._id
           }).progress(function (evt) {
               var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-              console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
               $scope.uploadProgress = progressPercentage;
           }).success(function (data, status, headers, config) {
               CSV.get(file, function(csvdata){
-                console.log(csvdata)
                 $scope.oldfiledata = csvdata;
               });
 
@@ -78,7 +78,6 @@ angular.module('controller', [])
             data: $scope._id
         }).progress(function (evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
             $scope.uploadProgress = progressPercentage;
 
         }).success(function (data, status, headers, config) {

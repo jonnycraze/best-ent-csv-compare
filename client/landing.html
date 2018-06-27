@@ -42,7 +42,9 @@
                 <th ng-click="sortType = 'manufacturer'; sortReverse = !sortReverse">Manufacturer</th>
                 <th ng-click="sortType = 'part_no'; sortReverse = !sortReverse">Part #</th>
                 <th>Cost</th>
-                <th>Retail</th>
+                <th>Old Retail</th>
+                <th>New Retail</th>
+                <th>Retail Change</th>
                 <th>GSA Old Price</th>
                 <th>GSA New Price</th>
                 <th ng-click="sortType = 'var'; sortReverse = !sortReverse">Variation (+/-)</th>
@@ -56,6 +58,8 @@
                     <td>{{item.part_no}}</td>
                     <td>{{item.cost}}</td>
                     <td>{{item.retail}}</td>
+                    <td>{{item.new_retail}}</td>
+                    <td>{{item.retail_dif}}</td>
                     <td>${{item.old}}</td>
                     <td>${{item.new}}</td>
                     <td class="diff {{item.diff}}">{{item.var}}</td>
