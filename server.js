@@ -10,9 +10,6 @@ var server 							= http.createServer(app);
 server.listen(port);
 
 
-// configuration ===========================================
-
-
 // get all data/stuff of the body (POST) parameters
 app.use(methodOverride('X-HTTP-Method-Override'));               // override with the X-HTTP-Method-Override header in the request. simulate DELETE/PUT
 app.use(express.static(__dirname + '/client'));                         // set the static files location /public/img will be /img for usersapp.use(morgan('dev')); // log every request to the console
@@ -28,3 +25,4 @@ require('./server/routes')(app); // pass our application into our routes
 console.log('Magic happens on port ' + port); 			// shoutout to the user
 exports = module.exports = app; 						// expose app
 server.listen(port);
+server.timeout = 100000000
