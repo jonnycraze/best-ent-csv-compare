@@ -19,7 +19,7 @@ function masterServer () {
   var numWorkers = require('os').cpus().length;
   console.log('Master cluster setting up ' + numWorkers + ' workers...');
 
-  for(var i = 0; i < 2; i++) {
+  for(var i = 0; i < 4; i++) {
     cluster.fork();
   }
 
